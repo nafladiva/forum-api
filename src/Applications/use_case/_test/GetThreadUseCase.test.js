@@ -1,38 +1,48 @@
+const ThreadDetail = require('../../../Domains/threads/entities/ThreadDetail');
+const CommentDetail = require('../../../Domains/threads/entities/CommentDetail');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const GetThreadUseCase = require('../GetThreadUseCase');
 
 describe('GetThreadUseCase', () => {
     it('should orchestrating the get thread action correctly', async () => {
-        const payload = {
-            threadId: '1',
-        };
+        const threadIdParam = 'thread-123';
 
         const mockThreadDetail = new ThreadDetail({
-            id: '1',
+            id: 'thread-123',
             title: 'abc',
-            body: 'abc',
-            date: '2021-08-08T07:22:33.555Z',
+            body: 'abcd',
+            date: '2021-08-08T07:19:09.775Z',
             username: 'nafla',
         });
+        const mockThreadComments = [
+            new CommentDetail({
+                id: 'comment-123',
+                username: 'nafla',
+                date: '2021-08-09T07:19:09.775Z',
+                content: 'abcd',
+            }),
+        ];
 
-        const mockCommentDetail = new CommentDetail({
-            id: '1',
-            username: 'nafla',
-            date: '2021-08-08T07:22:33.555Z',
-            content: 'abc',
-        });
+        const mockResult = {
+            ...mockThreadDetail,
+            comments: mockThreadComments,
+        };
 
         const mockThreadRepository = new ThreadRepository();
 
-        mockThreadRepository.getThread = jest.fn()
-            .mockImplementation(() => Promise.resolve());
+        mockThreadRepository.getThreadDetail = jest.fn()
+            .mockImplementation(() => Promise.resolve(mockThreadDetail));
+        mockThreadRepository.getThreadComments = jest.fn()
+            .mockImplementation(() => Promise.resolve(mockThreadComments));
 
         const getThreadUseCase = new GetThreadUseCase({
             threadRepository: mockThreadRepository,
         });
 
-        const threads = await getThreadUseCase.execute(payload);
+        const result = await getThreadUseCase.execute(threadIdParam);
 
-        //TODO
+        expect(result).toStrictEqual(mockResult);
+        expect(mockThreadRepository.getThreadDetail).toBeCalledWith(threadIdParam);
+        expect(mockThreadRepository.getThreadComments).toBeCalledWith(threadIdParam);
     });
 });

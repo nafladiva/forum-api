@@ -3,13 +3,16 @@ const DeleteThreadCommentUseCase = require('../DeleteThreadCommentUseCase');
 
 describe('DeleteThreadCommentUseCase', () => {
     it('should orchestrating the delete thread comment action correctly', async () => {
-        const payload = {
-            threadId: '1',
-            commentId: '1',
-        };
+        const threadIdParam = 'thread-123';
+        const commentIdParam = 'comment-123';
+        const ownerPayload = 'user-123'
 
         const mockThreadRepository = new ThreadRepository();
 
+        mockThreadRepository.verifyCommentById = jest.fn()
+            .mockImplementation(() => Promise.resolve());
+        mockThreadRepository.verifyCommentOwner = jest.fn()
+            .mockImplementation(() => Promise.resolve());
         mockThreadRepository.deleteThreadComment = jest.fn()
             .mockImplementation(() => Promise.resolve());
 
@@ -17,11 +20,8 @@ describe('DeleteThreadCommentUseCase', () => {
             threadRepository: mockThreadRepository,
         });
 
-        await deleteThreadCommentUseCase.execute(payload);
+        await deleteThreadCommentUseCase.execute(threadIdParam, commentIdParam, ownerPayload);
 
-        expect(mockThreadRepository.deleteThreadComment).toBeCalledWith({
-            threadId: payload.threadId,
-            commentId: payload.commentId,
-        });
+        expect(mockThreadRepository.deleteThreadComment).toBeCalledWith(threadIdParam, commentIdParam);
     });
 });
