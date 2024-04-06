@@ -61,18 +61,15 @@ class ThreadsHandler {
     }
 
     async getThreadHandler(request, h) {
+        const { threadId } = request.params;
+
         const getThreadUseCase = this._container.getInstance(GetThreadUseCase.name);
-        const threadDetail = await getThreadUseCase.execute(request.payload);
+        const thread = await getThreadUseCase.execute(threadId);
 
         return {
             status: 'success',
             data: {
-                thread: {
-                    ...threadDetail,
-                    comments: [
-                        //TODO: add comments
-                    ],
-                }
+                thread,
             },
         };
     }

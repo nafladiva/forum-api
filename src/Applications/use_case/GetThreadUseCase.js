@@ -3,8 +3,15 @@ class GetThreadUseCase {
         this._threadRepository = threadRepository;
     }
 
-    async execute(useCasePayload) {
-        return await this._threadRepository.getThread(useCasePayload);
+    async execute(threadId) {
+
+        const threadDetail = await this._threadRepository.getThreadDetail(threadId);
+        const threadComments = await this._threadRepository.getThreadComments(threadId);
+
+        return {
+            ...threadDetail,
+            comments: threadComments,
+        };
     }
 }
 

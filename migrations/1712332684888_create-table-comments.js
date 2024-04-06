@@ -21,7 +21,11 @@ exports.up = pgm => {
         is_delete: {
             type: 'BOOLEAN',
             notNull: true,
-        }
+        },
+        date: {
+            type: 'TEXT',
+            notNull: true,
+        },
     });
 
     // foreign key threadId
