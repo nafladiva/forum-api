@@ -31,9 +31,22 @@ describe('GetThreadUseCase', () => {
         const mockThreadRepository = new ThreadRepository();
 
         mockThreadRepository.getThreadDetail = jest.fn()
-            .mockImplementation(() => Promise.resolve(mockThreadDetail));
+            .mockImplementation(() => Promise.resolve(new ThreadDetail({
+                id: 'thread-123',
+                title: 'abc',
+                body: 'abcd',
+                date: '2021-08-08T07:19:09.775Z',
+                username: 'nafla',
+            })));
         mockThreadRepository.getThreadComments = jest.fn()
-            .mockImplementation(() => Promise.resolve(mockThreadComments));
+            .mockImplementation(() => Promise.resolve([
+                new CommentDetail({
+                    id: 'comment-123',
+                    username: 'nafla',
+                    date: '2021-08-09T07:19:09.775Z',
+                    content: 'abcd',
+                }),
+            ]));
 
         const getThreadUseCase = new GetThreadUseCase({
             threadRepository: mockThreadRepository,

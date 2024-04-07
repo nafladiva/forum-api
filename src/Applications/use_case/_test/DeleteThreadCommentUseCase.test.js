@@ -22,6 +22,8 @@ describe('DeleteThreadCommentUseCase', () => {
 
         await deleteThreadCommentUseCase.execute(threadIdParam, commentIdParam, ownerPayload);
 
+        expect(mockThreadRepository.verifyCommentById).toBeCalledWith(commentIdParam);
+        expect(mockThreadRepository.verifyCommentOwner).toBeCalledWith(commentIdParam, ownerPayload);
         expect(mockThreadRepository.deleteThreadComment).toBeCalledWith(threadIdParam, commentIdParam);
     });
 });

@@ -11,16 +11,17 @@ const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
 
 describe('ThreadRepositoryPostgres', () => {
-    beforeAll(async () => {
-        await UsersTableTestHelper.addUser({ username: 'nafla' });
-    });
-
     afterEach(async () => {
         await ThreadsTableTestHelper.cleanTable();
     });
 
     afterAll(async () => {
+        await UsersTableTestHelper.cleanTable();
         await pool.end();
+    });
+
+    beforeAll(async () => {
+        await UsersTableTestHelper.addUser({ username: 'nafla' });
     });
 
     describe('addThread function', () => {
