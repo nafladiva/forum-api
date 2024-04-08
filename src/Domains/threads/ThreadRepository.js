@@ -1,33 +1,33 @@
 class ThreadRepository {
-    async addThread() {
+    async addThread(addThread, owner) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async addThreadComment() {
+    async addThreadComment(addComment, threadId, owner) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async deleteThreadComment() {
+    async deleteThreadComment(threadId, commentId) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async getThreadDetail() {
+    async getThreadDetail(threadId) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async getThreadComments() {
+    async getThreadComments(threadId) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async verifyThreadById() {
+    async verifyThreadById(threadId) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async verifyCommentById() {
+    async verifyCommentById(commentId) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async verifyCommentOwner() {
+    async verifyCommentOwner(commentId, owner) {
         throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 }

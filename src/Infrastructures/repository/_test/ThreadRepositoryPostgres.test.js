@@ -127,12 +127,13 @@ describe('ThreadRepositoryPostgres', () => {
             const threadComments = await threadRepositoryPostgres.getThreadComments(threadId);
 
             expect(threadComments).toEqual([
-                new CommentDetail({
+                {
                     id: 'comment-123',
                     username: 'nafla',
                     date: '2021-08-08T07:59:18.982Z',
                     content: 'abc',
-                }),
+                    is_delete: false,
+                },
             ]);
         });
     });

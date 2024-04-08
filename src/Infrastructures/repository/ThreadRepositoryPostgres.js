@@ -3,7 +3,6 @@ const AuthorizationError = require('../../Commons/exceptions/AuthorizationError'
 const AddedComment = require('../../Domains/threads/entities/AddedComment');
 const AddedThread = require('../../Domains/threads/entities/AddedThread');
 const ThreadDetail = require('../../Domains/threads/entities/ThreadDetail');
-const CommentDetail = require('../../Domains/threads/entities/CommentDetail');
 const ThreadRepository = require('../../Domains/threads/ThreadRepository');
 
 class ThreadRepositoryPostgres extends ThreadRepository {
@@ -68,8 +67,7 @@ class ThreadRepositoryPostgres extends ThreadRepository {
 
     async getThreadComments(threadId) {
         const query = {
-            text: `SELECT comments.id, users.username, comments.date, 
-            CASE WHEN comments.is_delete THEN '**komentar telah dihapus**' ELSE comments.content END AS content FROM comments
+            text: `SELECT comments.id, users.username, comments.date, comments.content, comments.is_delete FROM comments
             INNER JOIN users ON comments.owner = users.id
             WHERE comments.thread_id = $1
             ORDER BY comments.date`,
@@ -77,7 +75,7 @@ class ThreadRepositoryPostgres extends ThreadRepository {
         };
 
         const result = await this._pool.query(query);
-        return result.rows.map((val) => new CommentDetail(val));
+        return result.rows;
     }
 
     async verifyThreadById(threadId) {
