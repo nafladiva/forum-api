@@ -1,4 +1,4 @@
-const CommentDetail = require('../../Domains/threads/entities/CommentDetail');
+const CommentDetail = require('../../Domains/comments/entities/CommentDetail');
 
 class GetThreadUseCase {
     constructor({ threadRepository }) {

@@ -1,12 +1,12 @@
 class DeleteThreadCommentUseCase {
-    constructor({ threadRepository }) {
-        this._threadRepository = threadRepository;
+    constructor({ commentRepository }) {
+        this._commentRepository = commentRepository;
     }
 
     async execute(threadId, commentId, owner) {
-        await this._threadRepository.verifyCommentById(commentId);
-        await this._threadRepository.verifyCommentOwner(commentId, owner);
-        return await this._threadRepository.deleteThreadComment(threadId, commentId);
+        await this._commentRepository.verifyCommentById(commentId);
+        await this._commentRepository.verifyCommentOwner(commentId, owner);
+        return await this._commentRepository.deleteThreadComment(threadId, commentId);
     }
 }
 
