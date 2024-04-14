@@ -48,6 +48,6 @@ describe('AddReplyUseCase', () => {
         expect(mockCommentRepository.verifyCommentById).toBeCalledWith(commentIdParam);
         expect(mockReplyRepository.addReply).toBeCalledWith(new AddReply({
             content: useCasePayload.content,
-        }), threadIdParam, ownerPayload);
+        }), threadIdParam, commentIdParam, ownerPayload);
     });
 });
