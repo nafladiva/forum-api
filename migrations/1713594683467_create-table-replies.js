@@ -1,5 +1,5 @@
 exports.up = pgm => {
-    pgm.createTable('comments', {
+    pgm.createTable('replies', {
         id: {
             type: 'VARCHAR(50)',
             primaryKey: true,
@@ -9,6 +9,10 @@ exports.up = pgm => {
             notNull: true,
         },
         thread_id: {
+            type: 'TEXT',
+            notNull: true,
+        },
+        comment_id: {
             type: 'TEXT',
             notNull: true,
         },
@@ -27,12 +31,15 @@ exports.up = pgm => {
     });
 
     // foreign key threadId
-    pgm.addConstraint('comments', 'fk_comments.thread_id_threads.id', 'FOREIGN KEY(thread_id) REFERENCES threads(id) ON DELETE CASCADE');
+    pgm.addConstraint('replies', 'fk_replies.thread_id_threads.id', 'FOREIGN KEY(thread_id) REFERENCES threads(id) ON DELETE CASCADE');
+
+    // foreign key commentId
+    pgm.addConstraint('replies', 'fk_replies.comment_id_comments.id', 'FOREIGN KEY(comment_id) REFERENCES comments(id) ON DELETE CASCADE');
 
     // foreign key owner
-    pgm.addConstraint('comments', 'fk_comments.owner_users.id', 'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE');
+    pgm.addConstraint('replies', 'fk_replies.owner_users.id', 'FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE');
 };
 
 exports.down = pgm => {
-    pgm.dropTable('comments');
+    pgm.dropTable('replies');
 };

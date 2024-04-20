@@ -35,8 +35,8 @@ describe('CommentRepositoryPostgres', () => {
 
             const addedComment = await commentRepositoryPostgres.addThreadComment(addComment, threadId, owner);
 
-            const thread = await ThreadsTableTestHelper.findCommentById('comment-123');
-            expect(thread).toHaveLength(1);
+            const comment = await ThreadsTableTestHelper.findCommentById('comment-123');
+            expect(comment).toHaveLength(1);
             expect(addedComment).toStrictEqual(new AddedComment({
                 id: 'comment-123',
                 content: 'abc',

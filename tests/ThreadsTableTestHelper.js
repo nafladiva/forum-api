@@ -23,6 +23,17 @@ const ThreadsTableTestHelper = {
         await pool.query(query);
     },
 
+    async addReply({
+        id = 'reply-123', content = 'abc', threadId = 'thread-123', commentId = 'comment-123', owner = 'user-123', isDelete = false, date = '2021-08-08T07:59:18.982Z',
+    }) {
+        const query = {
+            text: 'INSERT INTO replies VALUES($1, $2, $3, $4, $5, $6, $7)',
+            values: [id, content, threadId, commentId, owner, isDelete, date],
+        };
+
+        await pool.query(query);
+    },
+
     async findThreadById(id) {
         const query = {
             text: 'SELECT * FROM threads WHERE id = $1',
@@ -43,7 +54,19 @@ const ThreadsTableTestHelper = {
         return result.rows;
     },
 
+    async findReplyById(id) {
+        const query = {
+            text: 'SELECT * FROM replies WHERE id = $1',
+            values: [id],
+        };
+
+        const result = await pool.query(query);
+        return result.rows;
+    },
+
     async cleanTable() {
+        await pool.query('DELETE FROM replies WHERE 1=1');
+        await pool.query('DELETE FROM comments WHERE 1=1');
         await pool.query('DELETE FROM threads WHERE 1=1');
     },
 };
