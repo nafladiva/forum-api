@@ -44,6 +44,13 @@ const routes = (handler) => ([
             auth: 'forumapi_jwt',
         },
     },
+    {
+        method: 'GET',
+        path: '/threads/test',
+        handler: () => ({
+            value: 'Hello world!',
+        }),
+    }
 ]);
 
 module.exports = routes;
